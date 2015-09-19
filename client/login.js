@@ -75,97 +75,31 @@ Template.login.events({
                 // Alert that shit
                 alert(message);
                 
-            } else {
+            }  else {
             
                 // Get the value for the token 
                 var tokenValue = response.token;
                 
                 // Save the token value locally
-                setCookie("session_token", tokenValue, 100);
-                
-                // If the user has not logged in before
-                if(getCookie("logged_in") === null) {
-                    
-                    // Get the users with the same token
-                    var matchedUsers = HtnUsers.find({
-                        token: tokenValue
-                    });
-                    
-                    // If there is not already this user in the database
-                    if(matchedUsers.length == 0) {
-                    
-                        // Get information to push to the database
-                        var user_id = response.id;
-                        var user_email = response.email;
-                        var user_name = response.name;
-                        var user_name_parts = user_name.split(" ");
-                        var user_first_name = user_name_parts[0];
-                        var user_last_name = user_name_parts[1];
 
-                        // Query for all the users
-                        var allUsers = HtnUsers.find();
+                var userExists = HtnUsers.findOne({email: email});
 
-                        // The scores for the teams
-                        var teamScores = {
-                            "Blue": 0,
-                            "Red": 0,
-                            "Green": 0
-                        };
-
-                        // Loop through each user
-                        for(var i = 0; i < allUsers.length; i++) {
-
-                            // Get this user
-                            var thisUser = allUsers[i];
-
-                            // Increment the team score
-                            teamScores[thisUser.team] += thisUser.score;
-
-                        }
-
-                        // Get the team with the lowest score
-                        var lowestTeamName = null;
-                        for(var key in teamScores) {
-
-                            // If this team has a lower score
-                            if(teamScores[key] < teamScores[lowestTeamName] || lowestTeamName === null) lowestTeamName = key;
-
-                        }
-
-
-                        // Pick a team for the user
-                        var teamName = lowestTeamName;
-
-                        // Add the user to the database
-                        HtnUsers.insert({
-                            htnId: user_id,
-                            email: user_email,
-                            token: tokenValue,
-                            first: user_first_name,
-                            last: user_last_name,
-                            points: 0,
-                            team: teamName
-                        });
-
-                        // Set the cookie value
-                        setCookie("logged_in", "true", 100);
-
-                        // Redirect to the welcome page
-                        Router.go("/welcome");
-                        
-                    } else {
-                        
-                        // Redirect to the main page
-                        Router.go("/");
-                        
-                    }
-                    
+                if (!userExists) {
+                    var user_id = response.id;
+                    var user_email = response.email;
+                    var user_name = response.name;
+                    var user_name_parts = user_name.split(" ");
+                    var user_first_name = user_name_parts[0];
+                    var user_last_name = user_name_parts[1];
+                    // create user
+                    Meteor.call('newUser', user_id, user_email, tokenValue, user_first_name, user_last_name);
+                    setCookie("session_token", tokenValue, 100);
+                    Router.go("/welcome");
                 } else {
-                    
-                    // Redirect to the main page
-                    Router.go("/");
-                    
+                    setCookie("session_token", tokenValue, 100);
+                    Router.go('/');
                 }
+
             }
             
         });
