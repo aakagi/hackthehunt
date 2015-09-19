@@ -12,19 +12,19 @@
         Sign in with your Hack The North credentials!
     </p>
     <div class="row">
-        <div class="col-xs-12">
-            Email: 
-            <input type="email">
-        </div>
-        <div class="col-xs-12">
-            Password: 
-            <input type="password">
-        </div>
-        <div class="col-xs-12">
-            <button>
-                SUBMIT
-            </button>
-        </div>
+        <form id="login-form">
+            <div class="col-xs-12">
+                Email: 
+                <input type="email" id="email" />
+            </div>
+            <div class="col-xs-12">
+                Password: 
+                <input type="password" id="password" />
+            </div>
+            <div class="col-xs-12">
+                <input type="submit" value="SUBMIT" id="login-button" />
+            </div>
+        </form>
     </div>
     <a href="/fail">Temp go to fail</a>
     <a href="/welcome"> Temp go to welcome</a>
