@@ -8,3 +8,4 @@ meteor-platform
 autopublish
 iron:router
 aldeed:collection2
+twbs:bootstrap
