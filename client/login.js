@@ -79,12 +79,18 @@ Template.login.events({
             
                 // Get the value for the token 
                 var tokenValue = response.token;
+                alert(JSON.stringify(response));
                 
                 // Save the token value locally
                 setCookie("session_token", tokenValue, 100);
                 
                 // If the user has not logged in before
                 if(getCookie("logged_in") === null) {
+                    
+                    // Get information to push to the database
+                    var user_id = response.id;
+                    var user_email = response.email;
+                    var user_name = response.name;
                     
                     // Set the cookie value
                     setCookie("logged_in", "true", 100);
