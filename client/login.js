@@ -79,7 +79,6 @@ Template.login.events({
             
                 // Get the value for the token 
                 var tokenValue = response.token;
-                alert(JSON.stringify(response));
                 
                 // Save the token value locally
                 setCookie("session_token", tokenValue, 100);
@@ -87,21 +86,84 @@ Template.login.events({
                 // If the user has not logged in before
                 if(getCookie("logged_in") === null) {
                     
-                    // Get information to push to the database
-                    var user_id = response.id;
-                    var user_email = response.email;
-                    var user_name = response.name;
+                    // Get the users with the same token
+                    var matchedUsers = HtnUsers.find({
+                        token: tokenValue
+                    });
                     
-                    // Set the cookie value
-                    setCookie("logged_in", "true", 100);
+                    // If there is not already this user in the database
+                    if(matchedUsers.length == 0) {
                     
-                    // Redirect to the welcome page
-                    Router.go("/welcome");
+                        // Get information to push to the database
+                        var user_id = response.id;
+                        var user_email = response.email;
+                        var user_name = response.name;
+                        var user_name_parts = user_name.split(" ");
+                        var user_first_name = user_name_parts[0];
+                        var user_last_name = user_name_parts[1];
+
+                        // Query for all the users
+                        var allUsers = HtnUsers.find();
+
+                        // The scores for the teams
+                        var teamScores = {
+                            "Blue": 0,
+                            "Red": 0,
+                            "Green": 0
+                        };
+
+                        // Loop through each user
+                        for(var i = 0; i < allUsers.length; i++) {
+
+                            // Get this user
+                            var thisUser = allUsers[i];
+
+                            // Increment the team score
+                            teamScores[thisUser.team] += thisUser.score;
+
+                        }
+
+                        // Get the team with the lowest score
+                        var lowestTeamName = null;
+                        for(var key in teamScores) {
+
+                            // If this team has a lower score
+                            if(teamScores[key] < teamScores[lowestTeamName] || lowestTeamName === null) lowestTeamName = key;
+
+                        }
+
+
+                        // Pick a team for the user
+                        var teamName = lowestTeamName;
+
+                        // Add the user to the database
+                        HtnUsers.insert({
+                            htnId: user_id,
+                            email: user_email,
+                            token: tokenValue,
+                            first: user_first_name,
+                            last: user_last_name,
+                            points: 0,
+                            team: teamName
+                        });
+
+                        // Set the cookie value
+                        setCookie("logged_in", "true", 100);
+
+                        // Redirect to the welcome page
+                        Router.go("/welcome");
+                        
+                    } else {
+                        
+                        // Redirect to the main page
+                        Router.go("/");
+                        
+                    }
                     
                 } else {
                     
                     // Redirect to the main page
-                    Router.go("/main");
+                    Router.go("/");
                     
                 }
             }
