@@ -95,6 +95,7 @@ Template.login.events({
                     setCookie("session_token", tokenValue, 100);
                     Router.go("/welcome");
                 } else {
+                    Meteor.call('updateUserToken', idString, tokenValue);
                     setCookie("session_token", tokenValue, 100);
                     Router.go('/');
                 }
