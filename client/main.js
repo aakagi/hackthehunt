@@ -63,21 +63,6 @@ Template.main.events({
     
         // Send an ajax POST for the file upload
         $.ajax({
-            url: 'http://pipe.hackthehunt.co/qr_sca{
-        
-        // Create form data for the file
-        var data = new FormData();
-    
-        // Loop through the files on the form
-        $.each(event.target.files, function(key, value) {
-            
-            // Append the file to the data
-            data.append(key, value);
-            
-        });
-    
-        // Send an ajax POST for the file upload
-        $.ajax({
             url: 'http://pipe.hackthehunt.co/qr_scan',
             type: 'POST',
             data: data,
@@ -88,23 +73,6 @@ Template.main.events({
             success: function(response) {
                 
                 // 
-                
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                // Something went wrong, output an error?
-            }
-        });
-    }n',
-            type: 'POST',
-            data: data,
-            cache: false,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                
-                // 
-                console.log(response);
                 
             },
             error: function(jqXHR, textStatus, errorThrown) {
