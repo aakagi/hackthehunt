@@ -41,10 +41,8 @@ function getLocalUser() {
         return null;
         
     }
-    alert(JSON.stringify(fetchUsers.collection));
+    
     // Return the user object
     return fetchUsers[0];
     
 }
-
-alert(JSON.stringify(getLocalUser()));
