@@ -79,13 +79,12 @@ Template.login.events({
             
                 // Get the value for the token 
                 var tokenValue = response.token;
-                
-                // Save the token value locally
+                var user_id = response.id;
 
-                var userExists = HtnUsers.findOne({email: email});
+                var idString = user_id.toString();
+                var userExists = HtnUsers.find({htnId: idString}).fetch();
 
-                if (!userExists) {
-                    var user_id = response.id;
+                if (userExists.length < 1) {
                     var user_email = response.email;
                     var user_name = response.name;
                     var user_name_parts = user_name.split(" ");

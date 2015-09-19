@@ -31,4 +31,5 @@ Meteor.methods({
             team: "blue"
         });
     }
+
 })
