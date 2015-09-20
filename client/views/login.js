@@ -92,6 +92,11 @@ Template.login.events({
                     var user_last_name = user_name_parts[1];
                     // Make sure user is in pending
                     var inPending = (function(user_id) {
+                        var threeUsers = HtnUsers.find().fetch().length;
+                        if (threeUsers <= 3) {
+                            return true;
+                        }
+
                         var invitingUser = HtnUsers.findOne({
                             pending: user_id
                         });
