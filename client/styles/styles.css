@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
+
 body {
     /*background-color: #3494ee;*/
     background-color: #0D7993;
@@ -17,4 +19,14 @@ h1 {
     font-family: Oxygen !important;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
+.yellow {
+    color: #FFE100;
+}
+
+.blue {
+    color: #2176FF;
+}
+
+.red {
+    color: #FF0055;
+}
