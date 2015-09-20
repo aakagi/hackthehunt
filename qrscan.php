@@ -55,17 +55,17 @@ compress($filename, './' . $new_filename);
 $image_url = 'http://noteventure.com/' . $new_filename;
 
 // Define the API path for the QR code REST call
-$redirect = "http://api.qrserver.com/v1/read-qr-code/?fileurl=" . urlencode($image_url);
+$redirect = 'http://api.qrserver.com/v1/read-qr-code/?fileurl=' . urlencode($image_url);
 
 // Get the contents of the request as JSON
 $results = json_decode(file_get_contents($redirect));
 
 // Get the results of the request
 $code = (array)$results[0];
-$code = $code["symbol"];
+$code = $code['symbol'];
 $code = (array)$code[0];
-$code = $code["data"];
+$code = $code['data'];
 
 // Redirect to the path provided in POST data
 $redirpath = $_POST['redirpath'] . '?code=' . $code;
-header("Location: " . $redirpath);
+header('Location: ' . $redirpath);
