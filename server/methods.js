@@ -15,7 +15,6 @@ Meteor.methods({
         });
     },
     newUser: function(htnId, email, token, first, last) {
-        
         var teamPoints = function(team) {
             var teamUsers = HtnUsers.find({team: team});    
 
@@ -91,6 +90,30 @@ Meteor.methods({
         var codeUser = HtnUsers.findOne({htnId: code});
 
         if (codeUser) {
+            var temp = HtnUsers.findOne({
+                used_ids: {
+                    $in: [user.used_ids]
+                }
+            });
+
+            if (temp != null || temp !== undefined) {
+                Router.go('/');
+                return;
+            }
+            
+            var update = user.used_ids;
+            if (update == null || update === undefined) {
+                update = [];
+            }
+
+            update.push(codeUser._id);
+
+            HtnUsers.update({_id: user._id}, {
+                $set: {
+                    user: update
+                }
+            });
+
             if (codeUser.team == user.team) {
                 Meteor.call('changePoints', user._id, 25)
             } 
