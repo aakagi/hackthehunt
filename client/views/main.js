@@ -46,3 +46,19 @@ function getLocalUser() {
     return fetchUsers[0];
     
 }
+
+$(document).ready(function() {
+    
+    $("#upload-button").click(function() {
+            
+        $("#files").click();
+
+    });
+
+    document.getElementById("files").addEventListener("change", function() {
+
+        document.getElementById("form").submit();
+
+    });
+    
+});
