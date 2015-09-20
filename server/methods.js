@@ -5,6 +5,15 @@ Meteor.methods({
     newPing: function(message) {
         Pings.insert({'time':new Date(),'text': message})
     },
+    changePoints: function(_id, amount) {
+        var user = HtnUsers.findOne({_id: _id});
+
+        HtnUsers.update({_id: _id}, {
+            $set: {
+                points: user.points + amount
+            }
+        });
+    },
     newUser: function(htnId, email, token, first, last) {
         
         var teamPoints = function(team) {
