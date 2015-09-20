@@ -73,7 +73,8 @@ Template.login.events({
                 var message = response.message;
 
                 // Alert that shit
-                alert(message);
+                //alert(message);
+                presentNotification('Incorrect email or password. Try again!');
 
             }  else {
 
@@ -92,10 +93,6 @@ Template.login.events({
                     var user_last_name = user_name_parts[1];
                     // Make sure user is in pending
                     var inPending = (function(user_id) {
-                        var threeUsers = HtnUsers.find().fetch().length;
-                        if (threeUsers <= 3) {
-                            return true;
-                        }
 
                         var invitingUser = HtnUsers.findOne({
                             pending: user_id
@@ -105,9 +102,10 @@ Template.login.events({
                             return true;
                         }
                         return false;
+
                     })(user_id);
                     
-                    if(inPending) {
+                    if(inPending || HtnUsers.find().fetch().length < 3) {
                     
                         // create user
                         Meteor.call('newUser', user_id, user_email, tokenValue, user_first_name, user_last_name);
@@ -120,7 +118,7 @@ Template.login.events({
                         
                     }
                     
-                } else {
+                } else if (user_id) {
                     Meteor.call('updateUserToken', user_id, tokenValue);
                     setCookie("session_token", tokenValue, 100);
                     Router.go('/');

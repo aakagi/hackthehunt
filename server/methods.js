@@ -92,42 +92,20 @@ Meteor.methods({
         var codeUser = HtnUsers.findOne({htnId: code});
 
         if (codeUser) {
-            // var temp = HtnUsers.findOne({
-            //     used_ids: {
-            //         $in: [user.used_ids]
-            //     }
-            // });
-
-            // if (temp != null || temp !== undefined) {
-            //     Router.go('/');
-            //     return;
-            // }
-            
-            // var update = user.used_ids;
-            // if (update == null || update === undefined) {
-            //     update = [];
-            // }
-
-            // update.push(codeUser._id);
-
-            // HtnUsers.update({_id: user._id}, {
-            //     $set: {
-            //         user: update
-            //     }
-            // });
-
 
             var scanningNewAccount = function() {
-                for (var i = 0; i < user.used_ids.length; i++) {
-                    var current = user.used_ids[i];
-                    if (current == code) {
-                        return false;
+                if (user.used_ids) {
+                    for (var i = 0; i < user.used_ids.length; i++) {
+                        var current = user.used_ids[i];
+                        if (current == code) {
+                            return false;
+                        }
                     }
                 }
                 // Push user into array
                 HtnUsers.update({_id: user._id}, {
-                    used_ids: {
-                        $push: code
+                    $push: {
+                        used_ids: code
                     }
                 });
                 return true;
@@ -145,6 +123,7 @@ Meteor.methods({
             } else {
                 console.log("User has already been scanned");
             }
+
         } else {
             HtnUsers.update({_id: user._id}, {
                 $push: {
