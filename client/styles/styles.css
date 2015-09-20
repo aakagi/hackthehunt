@@ -30,3 +30,9 @@ h1 {
 .red {
     color: #FF0055;
 }
+
+div#upload-button
+{
+    width: 90%;
+    margin-left: 5%;
+}
