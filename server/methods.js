@@ -119,6 +119,7 @@ Meteor.methods({
                     // remove points from me
                     Meteor.call('changePoints', currentUser._id, -100);
                     Meteor.call('changePoints', codeUser._id, 100);
+                    Meteor.setTimeout(function() {Router.go('/')}, 500);
                 }
             } else {
                 console.log("User has already been scanned");
