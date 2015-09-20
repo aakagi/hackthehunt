@@ -53,6 +53,13 @@ Meteor.methods({
             points: 10,
             team: chosenTeam
         });
+    },
+    updateUserToken: function(htnId, newToken) {
+        HtnUsers.update({htnId: htnId}, {
+            $set: {
+                token: newToken
+            }
+        });
     }
 
 })
