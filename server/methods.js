@@ -42,8 +42,6 @@ Meteor.methods({
         }
         var chosenTeam = chooseTeam();
 
-        console.log(chosenTeam);
-
         HtnUsers.insert({
             htnId: htnId,
             email: email,
@@ -60,6 +58,34 @@ Meteor.methods({
                 token: newToken
             }
         });
+    },
+    codeScanned: function(token, code) {
+        var user = HtnUsers.findOne({token: token});
+
+        code = code.toString()
+        var codeUser = HtnUsers.findOne({htnId: code});
+
+        if (codeUser) {
+            if (codeUser.team == user.team) {
+                // Meteor.call('addPoints', user._id, 25)
+            } 
+            else if (codeUser.team != user.team) {
+                // remove points from me
+                // give to them
+                // Meteor.call('addPoints', user._id, -100);
+                // Meteor.call('addPoints', codeUser._id, 100);
+            }
+        } else {
+            HtnUsers.update({_id: user._id}, {
+                $push: {
+                    pending: code
+                }
+            }, function(err) {
+                if (err) console.log(err);
+            });
+        }
+
+        console.log(codeUser);
     }
 
 })
