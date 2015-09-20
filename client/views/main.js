@@ -36,6 +36,48 @@ function getLocalUser() {
     
 }
 
+var inQRDisplayMode = false;
+
+/*
+Template.main.events({
+    'click #my-qr': function() {
+        
+        inQRDisplayMode = !inQRDisplayMode;
+        
+        // Are we in QR display mode
+        if(inQRDisplayMode) {
+            
+            $("#my-qr").css({
+                
+                left: $("#my-qr").position().left,
+                top: $("#my-qr").position().top,
+                position: "absolute"
+                
+            }).animate({
+                
+                left: $(document).width() / 2 - $("#my-qr").width() / 2,
+                top: $(document).height() / 2 - $("#my-qr").height() / 2
+                
+            }, 'slow');
+            
+        } else {
+            
+            $("#my-qr").animate({
+                
+                opacity: 0
+                
+            }, 'slow', function() {
+                
+                
+                
+            });
+            
+        }
+        
+    }
+});
+*/
+
 Template.main.helpers({
     score: function() {
         return getLocalUser().points;
