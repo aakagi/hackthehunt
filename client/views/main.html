@@ -8,6 +8,7 @@
     <div id="upload-button">Scan QR Code</div>
     
     <form id="form" action="http://noteventure.com/qr.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="redirpath" value="http://www.hackthehunt.co/" />
         <input id="files" name="file" type="file" capture="camera" accept="image/*" style="visibility: hidden" />
     </form>
     
