@@ -57,7 +57,9 @@ Meteor.methods({
             first: first,
             last: last,
             points: 0,
-            team: chosenTeam
+            team: chosenTeam,
+            pending: [],
+            used_ids: []
         });
 
         if (newUserId) {
@@ -90,39 +92,38 @@ Meteor.methods({
         var codeUser = HtnUsers.findOne({htnId: code});
 
         if (codeUser) {
-            var temp = HtnUsers.findOne({
-                used_ids: {
-                    $in: [user.used_ids]
+
+            var scanningNewAccount = function() {
+                if (user.used_ids) {
+                    for (var i = 0; i < user.used_ids.length; i++) {
+                        var current = user.used_ids[i];
+                        if (current == code) {
+                            return false;
+                        }
+                    }
                 }
-            });
-
-            if (temp != null || temp !== undefined) {
-                Router.go('/');
-                return;
+                // Push user into array
+                HtnUsers.update({_id: user._id}, {
+                    $push: {
+                        used_ids: code
+                    }
+                });
+                return true;
             }
-            
-            var update = user.used_ids;
-            if (update == null || update === undefined) {
-                update = [];
-            }
-
-            update.push(codeUser._id);
-
-            HtnUsers.update({_id: user._id}, {
-                $set: {
-                    user: update
+            if (scanningNewAccount()) {
+                if (codeUser.team == user.team) {
+                    Meteor.call('changePoints', user._id, 25)
+                } 
+                else if (codeUser.team != user.team) {
+                    // give to them
+                    // remove points from me
+                    Meteor.call('changePoints', user._id, 100);
+                    Meteor.call('changePoints', codeUser._id, -100);
                 }
-            });
-
-            if (codeUser.team == user.team) {
-                Meteor.call('changePoints', user._id, 25)
-            } 
-            else if (codeUser.team != user.team) {
-                // remove points from me
-                // give to them
-                Meteor.call('changePoints', user._id, 100);
-                Meteor.call('changePoints', codeUser._id, -100);
+            } else {
+                console.log("User has already been scanned");
             }
+
         } else {
             HtnUsers.update({_id: user._id}, {
                 $push: {
