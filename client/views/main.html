@@ -1,13 +1,17 @@
 <template name="main">
-    
     {{> nav}}
-    <h1>
-        
-    </h1>
-    
-    <div class="score">{{score}}</div>
-    <div class="score_sub">POINTS</div>
-    
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="score">{{score}}</div>
+            <div class="score_sub">YOUR POINTS</div>
+        </div>
+
+        <div class="col-xs-6">
+            <div class="score">{{teamScore}}</div>
+            <div class="score_sub">TEAM POINTS</div>
+        </div>
+    </div>
     <center>
         <h4>Tip: scan them first, explain the game later.</h4>
         <img id="my-qr" src="http://noteventure.com/genqr.php?q={{user_id}}" width="160" height="160" />

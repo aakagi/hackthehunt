@@ -103,5 +103,22 @@ Template.main.helpers({
         if (getLocalUser()) {
             return getLocalUser().htnId;
         }
+    },
+    teamScore: function() {
+        var u = getLocalUser();
+        if (u) {
+            var teamUsers = HtnUsers.find({team: u.team}).fetch();    
+
+            var total = 0;
+
+            for (var i = 0; i < teamUsers.length; i++) {
+                var teamUser = teamUsers[i];
+                total += teamUser.points;
+            }
+
+            return total;
+        }
+
+        return -1;
     }
 });
