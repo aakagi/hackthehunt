@@ -1,11 +1,13 @@
 <template name="ping">
     {{> nav}}
-    <center> <h1>Notifications</h1>
-    {{test}}
+    <center><h1>Notifications</h1></center>
+   
     {{#each pings}}
-        <div>
+    
+        <div class="pingbox">
             {{text}}
         </div>
-
-    {{/each}} </center>
+    
+    {{/each}}
+    
 </template>

@@ -35,4 +35,28 @@ div#upload-button
 {
     width: 90%;
     margin-left: 5%;
+    margin-top: 40px;
+}
+
+div.pingbox
+{
+    background-color: #FFF;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #DDD;
+    padding: 20px;
+}
+
+div.score
+{
+    text-align: center;
+    font-size: 60px;
+}
+
+div.score_sub
+{
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    color: #AAA;
 }
