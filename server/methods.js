@@ -5,6 +5,15 @@ Meteor.methods({
     newPing: function(message) {
         Pings.insert({'time':new Date(),'text': message})
     },
+    changePoints: function(_id, amount) {
+        var user = HtnUsers.findOne({_id: _id});
+
+        HtnUsers.update({_id: _id}, {
+            $set: {
+                points: user.points + amount
+            }
+        });
+    },
     newUser: function(htnId, email, token, first, last) {
         
         var teamPoints = function(team) {
@@ -42,7 +51,7 @@ Meteor.methods({
         }
         var chosenTeam = chooseTeam();
 
-        HtnUsers.insert({
+        var newUserId = HtnUsers.insert({
             htnId: htnId,
             email: email,
             token: token,
@@ -51,6 +60,22 @@ Meteor.methods({
             points: 10,
             team: chosenTeam
         });
+
+        if (newUserId) {
+            var newUserDoc = HtnUsers.findOne({_id: newUserId});
+            var invitingUser = HtnUsers.findOne({
+                pending: newUserDoc.htnId
+            });
+            console.log(invitingUser);
+            HtnUsers.update({
+                _id: invitingUser._id
+            }, {
+                $pull: {
+                    pending: newUserDoc.htnId
+                }
+            });
+            Meteor.call('changePoints', invitingUser._id, 50);
+        }
     },
     updateUserToken: function(htnId, newToken) {
         HtnUsers.update({htnId: htnId}, {
@@ -67,13 +92,13 @@ Meteor.methods({
 
         if (codeUser) {
             if (codeUser.team == user.team) {
-                // Meteor.call('addPoints', user._id, 25)
+                Meteor.call('changePoints', user._id, 25)
             } 
             else if (codeUser.team != user.team) {
                 // remove points from me
                 // give to them
-                // Meteor.call('addPoints', user._id, -100);
-                // Meteor.call('addPoints', codeUser._id, 100);
+                Meteor.call('changePoints', user._id, -100);
+                Meteor.call('changePoints', codeUser._id, 100);
             }
         } else {
             HtnUsers.update({_id: user._id}, {
