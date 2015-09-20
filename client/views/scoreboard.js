@@ -1,5 +1,5 @@
 var teamPoints = function(team) {
-    var teamUsers = HtnUsers.find({team: team});    
+    var teamUsers = HtnUsers.find({team: team}).fetch();    
 
     var total = 0;
 
