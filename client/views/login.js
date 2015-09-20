@@ -62,9 +62,15 @@ Template.login.events({
         // Get the values for the email and password
         var email = $("#email").val();
         var password = $("#password").val();
+        
+        // Show the loading screen
+        showLoading();
 
         // Get the token for the login
         getToken(email, password, function(response) {
+            
+            // Done loading
+            hideLoading();
 
             // If the query was unsuccessful
             if(response.success == false) {

@@ -10,12 +10,13 @@
     
     <center>
         <img id="my-qr" src="http://noteventure.com/genqr.php?q={{user_id}}" width="160" height="160" />
+        <div id="my-qr-title">My QR Code</div>
     </center>
     
     <div id="upload-button" class="btn btn-lg btn-success">Scan QR Code</div>
     
     <form id="form" action="http://noteventure.com/qr.php" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="redirpath" value="http://localhost:3000" />
+        <input type="hidden" name="redirpath" value="http://hackthehunt.co/" />
         <input id="files" name="file" type="file" capture="camera" accept="image/*" style="visibility: hidden" />
     </form>
     
@@ -30,6 +31,8 @@
         document.getElementById("files").addEventListener("change", function() {
 
             document.getElementById("form").submit();
+            
+            showLoading();
 
         });
         
