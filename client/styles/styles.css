@@ -36,3 +36,11 @@ div#upload-button
     width: 90%;
     margin-left: 5%;
 }
+
+div.pingbox
+{
+    background-color: #FFF;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #DDD;
+    padding: 20px;
+}
