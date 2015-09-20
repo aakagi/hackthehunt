@@ -1,4 +1,21 @@
-
 <template name="nav">
-    NAV BAR
+    <div class="container-fluid">
+        <div class="row" style="font-size: 2em; padding-top: 20px;">
+            <div class="col-xs-3">
+                <a href="/welcome">
+                    <div class="glyphicon glyphicon-question-sign"></div>
+                </a>
+            </div>
+            <div class="col-xs-6">
+                <div style="text-transform: uppercase;">
+                    {{team}} team
+                </div>
+            </div>
+            <div class="col-xs-3" style="text-align: right;">
+                <a href="/ping">
+                    <div class="glyphicon glyphicon-fire"></div>
+                </a>
+            </div>
+        </div>
+    </div>
 </template>
