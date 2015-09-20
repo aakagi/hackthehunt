@@ -86,7 +86,7 @@ Meteor.methods({
         });
     },
     codeScanned: function(token, code) {
-        var user = HtnUsers.findOne({token: token});
+        var currentUser = HtnUsers.findOne({token: token});
 
         code = code.toString()
         var codeUser = HtnUsers.findOne({htnId: code});
@@ -94,16 +94,16 @@ Meteor.methods({
         if (codeUser) {
 
             var scanningNewAccount = function() {
-                if (user.used_ids) {
-                    for (var i = 0; i < user.used_ids.length; i++) {
-                        var current = user.used_ids[i];
+                if (currentUser.used_ids) {
+                    for (var i = 0; i < currentUser.used_ids.length; i++) {
+                        var current = currentUser.used_ids[i];
                         if (current == code) {
                             return false;
                         }
                     }
                 }
                 // Push user into array
-                HtnUsers.update({_id: user._id}, {
+                HtnUsers.update({_id: currentUser._id}, {
                     $push: {
                         used_ids: code
                     }
@@ -111,26 +111,28 @@ Meteor.methods({
                 return true;
             }
             if (scanningNewAccount()) {
-                if (codeUser.team == user.team) {
-                    Meteor.call('changePoints', user._id, 25)
+                if (codeUser.team == currentUser.team) {
+                    Meteor.call('changePoints', currentUser._id, 25)
                 } 
-                else if (codeUser.team != user.team) {
+                else if (codeUser.team != currentUser.team) {
                     // give to them
                     // remove points from me
-                    Meteor.call('changePoints', user._id, 100);
-                    Meteor.call('changePoints', codeUser._id, -100);
+                    Meteor.call('changePoints', currentUser._id, -100);
+                    Meteor.call('changePoints', codeUser._id, 100);
                 }
             } else {
                 console.log("User has already been scanned");
             }
 
         } else {
-            HtnUsers.update({_id: user._id}, {
+            HtnUsers.update({_id: currentUser._id}, {
                 $push: {
                     pending: code
                 }
-            }, function(err) {
-                if (err) console.log(err);
+            }, function(err, res) {
+                if (!err) {
+                    Router.go('/');
+                } else {console.log(err);}
             });
         }
 
