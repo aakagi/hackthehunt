@@ -30,19 +30,14 @@ function getLocalUser() {
     }
     
     // Create a query for the user with this token
-    var fetchUsers = HtnUsers.find({
+    return HtnUsers.findOne({
         token: session_token
     });
     
-    // If there are no users
-    if(fetchUsers.length === 0) {
-        
-        // Return a null value
-        return null;
-        
-    }
-    
-    // Return the user object
-    return fetchUsers[0];
-    
 }
+
+Template.main.helpers({
+    score: function() {
+        return getLocalUser().points;
+    }
+});
