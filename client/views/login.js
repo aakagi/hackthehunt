@@ -52,32 +52,32 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 Template.login.events({
-    
+
     // When the form is submitted
     'submit #login-form': function(e) {
-        
+
         // Prevent the submission of the form
         e.preventDefault();
-        
+
         // Get the values for the email and password
         var email = $("#email").val();
         var password = $("#password").val();
-        
+
         // Get the token for the login
         getToken(email, password, function(response) {
-            
+
             // If the query was unsuccessful
             if(response.success == false) {
-                
+
                 // Get the message from the backend
                 var message = response.message;
-                
+
                 // Alert that shit
                 alert(message);
-                
+
             }  else {
-            
-                // Get the value for the token 
+
+                // Get the value for the token
                 var tokenValue = response.token;
                 var user_id = response.id;
 
@@ -100,8 +100,8 @@ Template.login.events({
                 }
 
             }
-            
+
         });
-        
+
     }
 });
