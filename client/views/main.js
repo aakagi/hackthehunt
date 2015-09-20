@@ -38,7 +38,6 @@ function getLocalUser() {
 
 var inQRDisplayMode = false;
 
-/*
 Template.main.events({
     'click #my-qr': function() {
         
@@ -47,28 +46,45 @@ Template.main.events({
         // Are we in QR display mode
         if(inQRDisplayMode) {
             
-            $("#my-qr").css({
+            $("#upload-button").fadeOut('fast');
+            $("#nav-master").fadeOut('fast');
+            $(".score, .score_sub").fadeOut('fast');
+            
+            $("#my-qr").fadeOut('fast', function() {
                 
-                left: $("#my-qr").position().left,
-                top: $("#my-qr").position().top,
-                position: "absolute"
+                $("#my-qr-title").css("font-size", "20px");
                 
-            }).animate({
+                $("#my-qr").css({
                 
-                left: $(document).width() / 2 - $("#my-qr").width() / 2,
-                top: $(document).height() / 2 - $("#my-qr").height() / 2
+                    left: $("#my-qr").position().left,
+                    top: $("#my-qr").position().top,
+                    width: 280,
+                    height: 280,
+                    position: "absolute",
+                    left: $(document).width() / 2 - 280 / 2,
+                    top: $(document).height() / 2 - 280 / 2
+
+                }).fadeIn('slow');
                 
-            }, 'slow');
+            });
             
         } else {
             
-            $("#my-qr").animate({
+            $("#upload-button").fadeIn('fast');
+            $("#nav-master").fadeIn('fast');
+            $(".score, .score_sub").fadeIn('fast');
+            
+            $("#my-qr").fadeOut('fast', function() {
                 
-                opacity: 0
+                $("#my-qr-title").css("font-size", "14px");
                 
-            }, 'slow', function() {
-                
-                
+                $("#my-qr").css({
+                    position: "relative",
+                    top: 0,
+                    left: 0,
+                    width: 160,
+                    height: 160
+                }).fadeIn('slow');
                 
             });
             
@@ -76,7 +92,6 @@ Template.main.events({
         
     }
 });
-*/
 
 Template.main.helpers({
     score: function() {
