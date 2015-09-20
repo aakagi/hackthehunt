@@ -57,7 +57,7 @@ Meteor.methods({
             token: token,
             first: first,
             last: last,
-            points: 10,
+            points: 0,
             team: chosenTeam
         });
 
@@ -97,8 +97,8 @@ Meteor.methods({
             else if (codeUser.team != user.team) {
                 // remove points from me
                 // give to them
-                Meteor.call('changePoints', user._id, -100);
-                Meteor.call('changePoints', codeUser._id, 100);
+                Meteor.call('changePoints', user._id, 100);
+                Meteor.call('changePoints', codeUser._id, -100);
             }
         } else {
             HtnUsers.update({_id: user._id}, {
