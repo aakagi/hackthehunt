@@ -1,6 +1,11 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
+
 body {
     /*background-color: #3494ee;*/
-}
+    background-color: #0D7993;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif; font-weight: 300;
+  }
 
 h1 {
     font-size: 3em;
@@ -12,4 +17,16 @@ h1 {
 
 .oxygen {
     font-family: Oxygen !important;
+}
+
+.yellow {
+    color: #FFE100;
+}
+
+.blue {
+    color: #2176FF;
+}
+
+.red {
+    color: #FF0055;
 }

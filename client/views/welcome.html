@@ -1,6 +1,9 @@
 <template name="welcome">
+<center>
+<div class="page-height">
+    <br>
     <h4>
-        Welcome to
+        Welcome to...
     </h4>
     <h1>
         Hack The Hunt
@@ -8,34 +11,49 @@
     <h3>
         Waterloo's Greatest Social Engineering Game.
     </h3>
-    <p>
+    <br>
+    <br>
+    <h4>
         Now, make sure no one is watching.
-    </p>
-    <p>
-        No one is watching? Good. Now you can scroll down.
-    </p>
+    </h4>
+    <br><br>
+    <h4>
+        No one is watching?
+    </h4>
+    <h4>
+        Good.
+    </h4>
+    <h4>
+        Now you can scroll down.
+    </h4>
+</div>
 
-
+<div class="page-height">
+    <br><br>
     <h4>
         You're on the...
     </h4>
-    <div>
-        Blue Team!
-    </div>
+
+    <h2 style="text-transform: uppercase;" class="{{team}}">
+        {{team}} Team!
+    </h2>
+
+    <br><br><br>
     
     <h3>
         Here's how it works
     </h3>
-    <ul>
-        <li>Scan a new user -> +100 PTS</li>
-        <li>Scan someone on your team -> +25 PTS</li>
-        <li>Get someone on a different team to scan your tag and you TAKE 100 PTS from them!</li>
+    <ul class="list-group">
+        <li class="list-group-item">Scan a new user and you get <em>+50 PTS</em></li>
+        <li class="list-group-item">Scan someone on your team and get <em>+25 PTS</em></li>
+        <li class="list-group-item">Get someone on a different team to scan your tag and you <strong>TAKE</strong> <em>100 PTS</em> from them!</li>
     </ul>
     
     <a href="/">
-        <button>
+        <button class="btn btn-lg btn-success">
             Got It!
         </button>
     </a>
-    <a href="/login">Temp go back to login</a>
+</div>
+</center>
 </template>
