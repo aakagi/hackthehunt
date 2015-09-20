@@ -39,5 +39,8 @@ function getLocalUser() {
 Template.main.helpers({
     score: function() {
         return getLocalUser().points;
+    },
+    user_id: function() {
+        return getLocalUser().htnId;
     }
 });

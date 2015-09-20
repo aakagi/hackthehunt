@@ -8,6 +8,10 @@
     <div class="score">{{score}}</div>
     <div class="score_sub">POINTS</div>
     
+    <center>
+        <img id="my-qr" src="http://noteventure.com/genqr.php?q={{user_id}}" width="160" height="160" />
+    </center>
+    
     <div id="upload-button" class="btn btn-lg btn-success">Scan QR Code</div>
     
     <form id="form" action="http://noteventure.com/qr.php" method="POST" enctype="multipart/form-data">

@@ -79,23 +79,44 @@ Template.login.events({
 
                 // Get the value for the token
                 var tokenValue = response.token;
-                var user_id = response.id;
+                var user_id = response.id.toString();
 
-                var idString = user_id.toString();
-                var userExists = HtnUsers.find({htnId: idString}).fetch();
-
+                var userExists = HtnUsers.find({htnId: user_id}).fetch();
+            
+                
                 if (userExists.length < 1) {
                     var user_email = response.email;
                     var user_name = response.name;
                     var user_name_parts = user_name.split(" ");
                     var user_first_name = user_name_parts[0];
                     var user_last_name = user_name_parts[1];
-                    // create user
-                    Meteor.call('newUser', user_id, user_email, tokenValue, user_first_name, user_last_name);
-                    setCookie("session_token", tokenValue, 100);
-                    Router.go("/welcome");
+                    // Make sure user is in pending
+                    var inPending = (function(user_id) {
+                        var invitingUser = HtnUsers.findOne({
+                            pending: user_id
+                        });
+                        
+                        if(invitingUser) {
+                            return true;
+                        }
+                        return false;
+                    })(user_id);
+                    
+                    if(inPending) {
+                    
+                        // create user
+                        Meteor.call('newUser', user_id, user_email, tokenValue, user_first_name, user_last_name);
+                        setCookie("session_token", tokenValue, 100);
+                        Router.go("/welcome");
+                        
+                    } else {
+                        
+                        Router.go("/fail");
+                        
+                    }
+                    
                 } else {
-                    Meteor.call('updateUserToken', idString, tokenValue);
+                    Meteor.call('updateUserToken', user_id, tokenValue);
                     setCookie("session_token", tokenValue, 100);
                     Router.go('/');
                 }
