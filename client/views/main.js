@@ -22,7 +22,7 @@ function getLocalUser() {
     var session_token = getCookie("session_token");
     
     // If the session token is undefined
-    if(session_token === null) {
+    if(session_token == null) {
         
         // Return a null user value
         return null;
@@ -80,9 +80,13 @@ Template.main.events({
 
 Template.main.helpers({
     score: function() {
-        return getLocalUser().points;
+        if (getLocalUser()) {
+            return getLocalUser().points
+        }
     },
     user_id: function() {
-        return getLocalUser().htnId;
+        if (getLocalUser()) {
+            return getLocalUser().htnId;
+        }
     }
 });

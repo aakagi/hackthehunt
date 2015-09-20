@@ -104,6 +104,8 @@ Template.login.events({
                         return false;
 
                     })(user_id);
+
+                    console.log(inPending);
                     
                     if(inPending || HtnUsers.find().fetch().length < 3) {
                     
@@ -113,7 +115,7 @@ Template.login.events({
                         Router.go("/welcome");
                         
                     } else {
-                        
+                        console.log("here!");
                         Router.go("/fail");
                         
                     }
