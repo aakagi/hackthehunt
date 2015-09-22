@@ -8,3 +8,5 @@ I'll write a nicer README later. Heres a quick description on the game from a ch
 > The idea was that people could use deception in order to get more and more points (claiming that you were not in the game etc)
 
 > we also reverse engineered "hack the north" login API, and used that for authentication. The event organisers came over to make sure we were not misusing it lol
+
+Also, check us out on <a href="http://devpost.com/software/hack-the-hunt">Devpost</a>! 
